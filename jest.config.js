@@ -2,7 +2,7 @@
 // https://jestjs.io/docs/en/configuration.html
 
 module.exports = {
-  "setupFiles": [
+  "setupFilesAfterEnv": [
     "<rootDir>/scripts/setup-test-framework.js"
   ],
   "moduleFileExtensions": [

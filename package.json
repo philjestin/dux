@@ -10,6 +10,22 @@
     "test": "jest",
     "test-watch": "jest --watch"
   },
+  "jest": {
+    "setupFilesAfterEnv": "./scripts/setup-test-framework.js",
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "moduleNameMapper": {
+      ".scss": "identity-obj-proxy",
+      ".css": "identity-obj-proxy",
+      ".(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": " <rootDir> /mocks/fileMock.js"
+    }
+  },
   "dependencies": {
     "cross-fetch": "^3.0.1",
     "immutable": "^4.0.0-rc.12",

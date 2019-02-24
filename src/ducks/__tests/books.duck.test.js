@@ -1,12 +1,13 @@
 import _ from 'lodash';
 import fetchMock from 'fetch-mock'
 
-import { STAGE } from '../../utils';
+import { STAGE, fetchApi } from '../../utils';
 import data from './book.data';
-import expectedDispatchActions from './duck.test.helper';
 
 import reducer, { ActionCreators as BookActions, TYPES } from '../books.duck';
 import expectedDispatchedActions from './duck.test.helper';
+
+jest.mock('../../utils/fetchAPI');
 
 describe('src::ducks::book.duck', () => {
 
@@ -23,13 +24,13 @@ describe('src::ducks::book.duck', () => {
     },
   };
   const getBookSuccessAction = {
-    type: TYPES.GET_BOOKS_SUCCESS,
+    type: TYPES.GET_BOOK_SUCCESS,
     payload: {
-      book: data,
+      data: data,
     },
   }
   const getBookErrorAction = {
-    type: TYPES.GET_BOOKS_ERROR,
+    type: TYPES.GET_BOOK_ERROR,
     payload: {
       error: 'error',
     },
@@ -37,16 +38,15 @@ describe('src::ducks::book.duck', () => {
 
   describe('Testing Async Actions for books duck', () => {
     test('dispatch getBook creates GET_BOOK and GET_BOOKS_SUCCESS', async () => {
-
-      fetchMock.getOnce(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`, 200);
-
+      fetchApi.mockImplementation(() => Promise.resolve(data));
       const action = BookActions.getBook(isbn);
       const dispatchedActions = [
         getBookAction,
         getBookSuccessAction,
       ];
 
-      await expectedDispatchActions(action, dispatchedActions);
+      await expectedDispatchedActions(action, dispatchedActions);
+      jestExpect(fetchApi).toHaveBeenCalledWith(`https:///www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`);
     });
   });
 });

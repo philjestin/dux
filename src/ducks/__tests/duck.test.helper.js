@@ -1,7 +1,8 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-const mockStore = configureMockStore([thunk]);
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
 
 const findAction = (store, type) => (
   store.getActions().find(action => (
@@ -16,8 +17,7 @@ const expectedDispatchedActions = async (action, expectedDispatchedActions) => {
 
   expectedDispatchedActions.forEach(expectedDispatchedAction => {
     const actualDispatchedAction = findAction(store, expectedDispatchedAction.type);
-
-    expect(actualDispatchedAction).toEqual(expectedDispatchedAction);
+    jestExpect(actualDispatchedAction).toEqual(expectedDispatchedAction);
   });
 };
 

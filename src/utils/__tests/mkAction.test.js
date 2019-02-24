@@ -15,9 +15,8 @@ describe('src::utils::mkAction', () => {
     };
     const action = mkAction(type, { payload });
 
-
-    expect(_.isEqual(mkAction(type, payload), combined)).toEqual(true);
-    expect(action.payload.payload.data).toEqual('Hello Medium');
-    expect(action.type).toEqual('GET_ACTION');
+    expect(_.isEqual(mkAction(type, payload), combined)).equal(true);
+    expect(action.payload.payload.data).equal('Hello Medium');
+    expect(action.type).equal('GET_ACTION');
   });
 });
